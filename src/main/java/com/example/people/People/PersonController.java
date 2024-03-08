@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(path = "api/v1/Person")
@@ -29,10 +30,13 @@ public class PersonController {
     }
     @PutMapping(path= "{personId}")
     public void updatePerson(
-            @PathVariable("personId") Long studentId,
+            @PathVariable("personId") Long personId,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String email){
-        personService.updatePerson(studentId, name, email);
+        personService.updatePerson(personId, name, email);
     }
-
+    @GetMapping(path = "{personId}")
+    public Optional<Person> getPerson(@PathVariable Long personId){
+        return personService.getPersonById(personId);
+    }
 }
